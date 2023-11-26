@@ -1,26 +1,24 @@
 	--0. getting a preview of the content structure
---select top 3 * from wolf
+select top 3 * from wolf
 
      --1a. Remove local identifiers from nation
---update wolf
---set Location = reverse(location);
+update wolf
+set Location = reverse(location);
 
---select 
---rtrim(location,CHARINDEX(' ,', reverse(location))) AS location
---FROM wolf
+select 
+rtrim(location,CHARINDEX(' ,', reverse(location))) AS location
+FROM wolf
 
---delete from wolf
---where location is null 
+delete from wolf where location is null 
 
---update wolf
---set Location = right(location,CHARINDEX(' ,', reverse(location)))
---update wolf set location =
---rtrim(location,charindex(' ,', reverse(location)))
+update wolf
+set Location = right(location,CHARINDEX(' ,', reverse(location)))
+update wolf set location = rtrim(location,charindex(' ,', reverse(location)))
 
      --1b. rectifying error where some . were left in
-			--1b. Note: some nations are former nations or have changed, so those are left as is (ex: Karela(formerly finland))
---update wolf
---set Location = LEFT(location,CHARINDEX('.',location +'.')-1)
+	 --1b. Note: some nations are former nations or have changed, so those are left as is (ex: Karela(formerly finland))
+update wolf
+set Location = LEFT(location,CHARINDEX('.',location +'.')-1)
 
      --1c. grouping nations for count
 select location, count(location) as count from wolf
