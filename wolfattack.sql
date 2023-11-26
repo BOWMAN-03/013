@@ -41,3 +41,11 @@ CTE_attack2 as (select count, Case
 	CTE_year2 as (select right(trim(year),5) as year from CTE_year  group by year),
 	CTE_year3 as (select year as year, count(year) as number from CTE_year2 group by year)
 	select *  from CTE_year3 order by year asc;
+
+	--4. get all with corrected nations
+	select date, location, Case 
+	when Type_of_attack = 'Rabid' then 'Rabid'
+	when Type_of_attack = 'Predatory' then 'Predatory'
+	else 'Other'
+	end as 'Attack_Type'
+	from wolf
