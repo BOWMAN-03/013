@@ -49,3 +49,15 @@ CTE_attack2 as (select count, Case
 	else 'Other'
 	end as 'Attack_Type'
 	from wolf
+
+	--5. query that merges 3 + 4
+		with CTE_year as (select case
+	when type_of_attack = 'Rabid' then 'Rabid'
+	when type_of_attack = 'Predatory' then 'Predatory'
+	else 'Other'
+	end as 'toa',
+		trim(date) as year from wolf group by date, type_of_attack),
+	CTE_year2 as (select toa as toa, right(trim(year),5) as year, count(year) as number from CTE_year  group by year, toa),
+	CTE_year3 as (select toa as toa, year as year, sum(number) as number from CTE_year2 group by year, toa),
+	CTE_year4 as (select toa, year, sum(number) as number from CTE_year3 group by toa, year)
+	select toa as toa, year as year, sum(number) as count from CTE_year4 group by toa, year
